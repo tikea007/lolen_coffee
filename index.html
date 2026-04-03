@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lolan Coffee </title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="style.css" />
+
+</head>
+
+<body>
+
+    <!-- LOGIN -->
+    <div id="loginScreen">
+        <div class="login-box">
+            <h2>☕ Lolan Coffee</h2>
+            <input type="password" id="passInput" placeholder="Enter PIN" maxlength="10">
+            <button class="primary-btn" style="margin-top:4px;" onclick="checkLogin()">Login</button>
+            <p id="loginError" style="color:#e53935; font-size:13px; margin-top:10px; display:none;">Wrong PIN, try
+                again.</p>
+        </div>
+    </div>
+
+    <div id="mainApp">
+
+        <div class="card" style="padding:14px 16px;">
+            <h1>☕ Lolan Coffee</h1>
+        </div>
+
+        <!-- POS -->
+        <div class="pos-container">
+            <div class="menu-grid">
+                <div class="category-block">
+                    <div class="cat-title" style="color:var(--coffee)">☕ Coffee</div>
+                    <div class="btn-grid">
+                        <button class="item-btn btn-coffee" onclick="selectItem('Iced Americano',5000,this)">Iced
+                            Americano<span>5,000 ៛</span></button>
+                        <button class="item-btn btn-coffee"
+                            onclick="selectItem('Espresso',5000,this)">Espresso<span>5,000 ៛</span></button>
+                        <button class="item-btn btn-coffee" onclick="selectItem('Iced Latte',5000,this)">Iced
+                            Latte<span>5,000 ៛</span></button>
+                        <button class="item-btn btn-coffee" onclick="selectItem('Iced Mocha',5000,this)">Iced
+                            Mocha<span>5,000 ៛</span></button>
+                        <button class="item-btn btn-coffee" onclick="selectItem('Hot Latte',5000,this)">Hot
+                            Latte<span>5,000 ៛</span></button>
+                        <button class="item-btn btn-coffee" onclick="selectItem('Coffee Milk',5000,this)">Coffee
+                            Milk<span>5,000 ៛</span></button>
+                        <button class="item-btn btn-coffee" onclick="selectItem('Iced Cappuchino',5000,this)">Iced
+                            Cappuchino<span>5,000 ៛</span></button>
+                        <button class="item-btn btn-coffee" onclick="selectItem('Water',1000,this)">Water<span>1,000
+                                ៛</span></button>
+                    </div>
+                </div>
+                <div class="category-block">
+                    <div class="cat-title" style="color:var(--tea)">🍃 Tea</div>
+                    <div class="btn-grid">
+                        <button class="item-btn btn-tea" onclick="selectItem('Green Milk Tea',5000,this)">Green Milk
+                            Tea<span>5,000 ៛</span></button>
+                        <button class="item-btn btn-tea" onclick="selectItem('Lemon Green Tea',4000,this)">Lemon Green
+                            Tea<span>4,000 ៛</span></button>
+                        <button class="item-btn btn-tea" onclick="selectItem('Honey Lemon Tea',5000,this)">Honey Lemon
+                            Tea<span>5,000 ៛</span></button>
+                        <button class="item-btn btn-tea" onclick="selectItem('Red Tea',4000,this)">Red Tea<span>4,000
+                                ៛</span></button>
+                        <button class="item-btn btn-tea" onclick="selectItem('Red Milk Tea',5000,this)">Red Milk
+                            Tea<span>5,000 ៛</span></button>
+                    </div>
+                </div>
+                <div class="category-block">
+                    <div class="cat-title" style="color:var(--soda)">🥤 Soda / Others</div>
+                    <div class="btn-grid">
+                        <button class="item-btn btn-soda" onclick="selectItem('Passion Soda',5000,this)">Passion
+                            Soda<span>5,000 ៛</span></button>
+                        <button class="item-btn btn-soda" onclick="selectItem('Passion Milk',5000,this)">Passion
+                            Milk<span>5,000 ៛</span></button>
+                        <button class="item-btn btn-soda" onclick="selectItem('Green Mint Soda',5000,this)">Green Mint
+                            Soda<span>5,000 ៛</span></button>
+                        <button class="item-btn btn-soda" onclick="selectItem('Matcha Bowl',5000,this)">Matcha
+                            Bowl<span>5,000 ៛</span></button>
+                    </div>
+                </div>
+                <div class="category-block">
+                    <div class="cat-title" style="color:var(--food)">🥘 Foods</div>
+                    <div class="btn-grid">
+                        <button class="item-btn btn-food" onclick="selectItem('Nom Banh Chok',5000,this)">Nom Banh
+                            Chok<span>5,000 ៛</span></button>
+                        <button class="item-btn btn-food" onclick="selectItem('Loklak Fried Rice',7000,this)">Loklak
+                            Fried Rice<span>7,000 ៛</span></button>
+                        <button class="item-btn btn-food"
+                            onclick="selectItem('Mareas Prov Fried Rice',7000,this)">Mareas Prov Fried Rice<span>7,000
+                                ៛</span></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CHECKOUT -->
+            <div class="checkout-panel card">
+                <div class="selected-label">Selected Item</div>
+                <div id="selectedName">—</div>
+                <div class="qty-row">
+                    <label>Qty:</label>
+                    <input type="number" id="qtyInput" value="1" min="1" oninput="checkForm()">
+                </div>
+                <div class="pay-container">
+                    <button type="button" class="pay-btn" id="btnCash" onclick="setPayment('Cash')">💵 Cash</button>
+                    <button type="button" class="pay-btn" id="btnABA" onclick="setPayment('ABA')">🏦 ABA</button>
+                </div>
+                <div class="price-box" id="priceDisplay">0 ៛</div>
+                <form id="salesForm">
+                    <input type="hidden" id="finalItem" name="item" required>
+                    <input type="hidden" id="finalPrice" name="price" required>
+                    <button type="submit" id="submitBtn" class="primary-btn" disabled>Record Sale</button>
+                </form>
+                <div id="status"></div>
+            </div>
+        </div>
+
+        <!-- DASHBOARD -->
+        <div class="card" id="printSection">
+            <h2>📊 Daily Summary <span id="printDate"
+                    style="display:none; font-weight:400; font-size:13px; color:#888;"></span></h2>
+
+            <div class="stats-grid">
+                <div class="stat-card"><small>Drinks Sold</small>
+                    <div class="val" id="qtyDrinks">0</div>
+                </div>
+                <div class="stat-card"><small>Foods Sold</small>
+                    <div class="val" id="qtyFoods">0</div>
+                </div>
+                <div class="stat-card"><small>Total Items</small>
+                    <div class="val" id="qtyTotal">0</div>
+                </div>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-card" style="border-top:4px solid #2e7d32;"><small>💵 Cash</small>
+                    <div class="val" id="revCash" style="color:#2e7d32;">0 ៛</div>
+                </div>
+                <div class="stat-card" style="border-top:4px solid var(--aba);"><small>🏦 ABA</small>
+                    <div class="val" id="revABA" style="color:var(--aba);">0 ៛</div>
+                </div>
+                <div class="stat-card" style="border-top:4px solid var(--coffee);"><small>💰 Gross</small>
+                    <div class="val" id="revTotal">0 ៛</div>
+                </div>
+            </div>
+
+            <!-- EXPENSE -->
+            <div class="expense-section">
+                <div class="expense-section-title">💸 Daily Expenses</div>
+                <div class="expense-body">
+                    <div>
+                        <div class="expense-input-group">
+                            <input type="text" id="expenseNote" placeholder="Note  (e.g. Ice, Milk, Salary)">
+                            <input type="number" id="expenseAmt" placeholder="Amount in ៛" min="0">
+                            <button class="add-expense-btn" onclick="addExpense()">+ Add Expense</button>
+                        </div>
+                        <div class="expense-list-wrap" id="expenseList">
+                            <div class="expense-empty" id="expenseEmptyMsg">No expenses added yet.</div>
+                        </div>
+                        <div class="expense-total-row">
+                            <span class="expense-total-label">Total expenses</span>
+                            <span class="expense-total-val" id="expenseDisplay">0 ៛</span>
+                        </div>
+                    </div>
+                    <div class="net-profit-box">
+                        <span class="label">📈 Net Profit Today</span>
+                        <div id="netProfit">0 ៛</div>
+                    </div>
+                </div>
+            </div>
+
+            <button type="button" class="primary-btn" style="background:#555; margin-bottom:18px;"
+                onclick="printReport()">🖨️ Print Daily Report</button>
+            <canvas id="salesChart"></canvas>
+            <span class="logout-link" onclick="logout()">Logout &amp; Lock</span>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
