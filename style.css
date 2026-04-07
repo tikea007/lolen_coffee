@@ -120,7 +120,7 @@
 
         /* PRINT */
         @media print {
-            body { background: white; padding: 0; }
+            body { background: white; padding: 0; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
             #loginScreen, .pos-container, .logout-link, .primary-btn, .expense-input-group, .add-expense-btn, canvas { display: none !important; }
             .card { box-shadow: none; border: 1px solid #ddd; margin: 4px 0; }
             .expense-section { border: 1px solid #999; background: transparent; }

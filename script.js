@@ -249,7 +249,9 @@ document.getElementById("expenseAmt").addEventListener("keydown", e => {
 function printReport() {
     document.getElementById("printDate").innerText =
         new Date().toLocaleDateString("en-GB", { weekday: "long", year: "numeric", month: "long", day: "numeric" });
-    window.print();
+    setTimeout(() => {
+        window.print();
+    }, 500);
 }
 function logout() { sessionStorage.clear(); location.reload(); }
 
