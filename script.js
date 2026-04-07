@@ -95,9 +95,17 @@ function renderExpenses() {
     document.getElementById("expenseDisplay").innerText = totalExp.toLocaleString() + " ៛";
 
     const net = grossRevenue - totalExp;
+    const netUsd = net / 4000;
+    
     const np = document.getElementById("netProfit");
+    const npUsd = document.getElementById("netProfitUsd");
+    
     np.innerText = net.toLocaleString() + " ៛";
-    np.style.color = net >= 0 ? "#2e7d32" : "#d84315";
+    npUsd.innerText = "$" + netUsd.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
+    
+    const profitColor = net >= 0 ? "#2e7d32" : "#d84315";
+    np.style.color = profitColor;
+    if (npUsd) npUsd.style.color = profitColor;
 
     if (expenseList.length === 0) {
         container.innerHTML = '<div class="expense-empty">No expenses added yet.</div>';
