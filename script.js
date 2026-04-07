@@ -185,15 +185,49 @@ async function loadDashboard(pass) {
 }
 
 function renderChart(counts) {
+    const keys = Object.keys(counts);
+    // dynamically adjust width and keep the wrapper responsive
+    const minW = Math.max(600, keys.length * 60);
+    document.getElementById("chartWrapperInner").style.minWidth = minW + "px";
+
     const ctx = document.getElementById("salesChart").getContext("2d");
     if (myChart) myChart.destroy();
+    
+    // plugin drawing quantities on top of bars
+    const barLabelsPlugin = {
+        id: 'barLabels',
+        afterDatasetsDraw(chart, args, options) {
+            const { ctx } = chart;
+            chart.data.datasets.forEach((dataset, i) => {
+                chart.getDatasetMeta(i).data.forEach((bar, index) => {
+                    const data = dataset.data[index];
+                    if (data > 0) {
+                        ctx.fillStyle = '#444';
+                        ctx.font = 'bold 13px "Segoe UI", sans-serif';
+                        ctx.textAlign = 'center';
+                        ctx.textBaseline = 'bottom';
+                        ctx.fillText(data, bar.x, bar.y - 5);
+                    }
+                });
+            });
+        }
+    };
+
     myChart = new Chart(ctx, {
         type: "bar",
         data: {
-            labels: Object.keys(counts),
+            labels: keys,
             datasets: [{ data: Object.values(counts), backgroundColor: "#799468", borderRadius: 6 }]
         },
-        options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } }
+        options: { 
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } }, 
+            scales: { 
+                y: { beginAtZero: true, grace: '10%' } 
+            } 
+        },
+        plugins: [barLabelsPlugin]
     });
 }
 

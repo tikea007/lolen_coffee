@@ -79,6 +79,8 @@
                             Soda<span>5,000 ៛</span></button>
                         <button class="item-btn btn-soda" onclick="selectItem('Matcha Bowl',5000,this)">Matcha
                             Bowl<span>5,000 ៛</span></button>
+                        <button class="item-btn btn-soda" onclick="selectItem('Matcha Latte',5000,this)">Matcha Latte<span>5,000 ៛</span></button>
+                        <button class="item-btn btn-soda" onclick="selectItem('Matcha Strawberry',5000,this)">Matcha Strawberry<span>5,000 ៛</span></button>
                     </div>
                 </div>
                 <div class="category-block">
@@ -175,7 +177,13 @@
 
             <button type="button" class="primary-btn" style="background:#555; margin-bottom:18px;"
                 onclick="printReport()">🖨️ Print Daily Report</button>
-            <canvas id="salesChart"></canvas>
+            
+            <div style="width: 100%; overflow-x: auto; margin-bottom: 20px; border-radius: 8px;">
+                <div id="chartWrapperInner" style="min-width: 600px; height: 300px; position: relative;">
+                    <canvas id="salesChart"></canvas>
+                </div>
+            </div>
+            
             <span class="logout-link" onclick="logout()">Logout &amp; Lock</span>
         </div>
     </div>
